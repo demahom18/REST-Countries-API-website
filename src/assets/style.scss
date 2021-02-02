@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;600;800&display=swap');
+
+*,
+*::after,
+*::before {
+  margin:0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+//Variables: 
+$font-fam : 'Nunito Sans', sans-serif;
+$text-col : hsl(200, 15%, 8%);
+$text-dark-mode: hsl(0, 0%, 100%); 
+$bg-col : hsl(0, 0%, 98%);
+$bg-dark-mode : hsl(207, 26%, 17%);
+
+
+//Global styles
+body {
+  font-family: $font-fam;
+  background: $bg-col;
+  color: $text-col;
+  margin: 0 auto;
+}
+img {
+  max-width: 100%;
+}
