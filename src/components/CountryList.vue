@@ -44,35 +44,37 @@ export default {
 </script>
 
 <style lang="scss">
-
-$card-bg : hsl(0, 0%, 100%);
+ @import '../assets/style.scss'; 
 
   .country-list {
-    display: flex;
+    @include flex(column, '', '');
     flex-basis: 100%;
-    flex-direction: column;
   }
 
   .country-card {
     margin: 20px;
     width:min(90vw, 350px);
-    background: $card-bg;
+    border-radius: 5px; 
+    background: white;
     img { 
       border-radius: 5px 5px 0 0; 
     }
 
-    
+    h2 {font-size: 18px;}
   }
 
  .country-infos {
    padding: 20px;
+   p { padding: 0 5px;}
+
    span {
-    display:flex;
-    align-items:  center;
+     @include flex('', center, '');
+    font-size: 14px;
   }
-  p {
-    padding: 0 5px;
-  }
+  
+ }
+ body.dark-mode .country-card {
+   background: $el-bg-dark-mode;
  }
 
  

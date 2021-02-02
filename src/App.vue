@@ -1,11 +1,20 @@
 <template>
-  <nav>
-      <h1>Where in the world?</h1>
-      <div>Dark Mode</div>
-  </nav>
+  <NavBar @toggle-theme="setTheme"/>
   <router-view/>
 </template>
-
+<script>
+import NavBar from './components/NavBar.vue'
+export default {
+  components: { NavBar },
+  methods: {
+    setTheme() {
+      const body = this.$el.parentNode.parentNode
+      body.classList.toggle('dark-mode')
+      console.log(body.classList)
+    }
+  }
+}
+</script>
 <style lang="scss">
 #app {
   width: 100%;
@@ -16,6 +25,6 @@
 }
 
 nav {
-  
+
 }
 </style>

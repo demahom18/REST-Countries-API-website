@@ -8,12 +8,13 @@
   box-sizing: border-box;
 }
 
-//Variables: 
+///Variables: 
 $font-fam : 'Nunito Sans', sans-serif;
 $text-col : hsl(200, 15%, 8%);
-$text-dark-mode: hsl(0, 0%, 100%); 
 $bg-col : hsl(0, 0%, 98%);
+$text-dark-mode: hsl(0, 0%, 100%); 
 $bg-dark-mode : hsl(207, 26%, 17%);
+$el-bg-dark-mode : hsl(209, 23%, 22%);
 
 
 //Global styles
@@ -23,6 +24,25 @@ body {
   color: $text-col;
   margin: 0 auto;
 }
+
+///DarkMode
+body.dark-mode{
+  background: $bg-dark-mode;
+  color: $text-dark-mode;
+}
+
 img {
   max-width: 100%;
+}
+/// Boilerplate flexbox
+///
+/// @param { string } $dir direction column or row / default row 
+/// @param { string } $al align-items 
+/// @param { string } $just justify-content 
+///
+@mixin flex($dir: row, $al, $just ) {
+  display: flex;
+  @if $dir { flex-direction: $dir;}
+  @if $al { align-items: $al;}
+  @if $just { justify-content: $just;}
 }
