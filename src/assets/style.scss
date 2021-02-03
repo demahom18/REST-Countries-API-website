@@ -9,14 +9,15 @@
 }
 
 ///Variables: 
-$font-fam : 'Nunito Sans', sans-serif;
 $text-col : hsl(200, 15%, 8%);
 $bg-col : hsl(0, 0%, 98%);
 $text-dark-mode: hsl(0, 0%, 100%); 
 $bg-dark-mode : hsl(207, 26%, 17%);
 $el-bg-dark-mode : hsl(209, 23%, 22%);
+$shadow-light:  #ddd;
+$shadow-dark:  #111;
 
-/// Boilerplate mixin for flexbox
+/// mixin for flexbox
 ///
 /// @param { string } $dir flex-direction / default to row 
 /// @param { string } $al align-items 
@@ -24,16 +25,16 @@ $el-bg-dark-mode : hsl(209, 23%, 22%);
 ///
 @mixin flex($dir: '', $al:'', $just: '' ) {
   display: flex;
-  @if $dir { flex-direction: $dir;}
-  @if $al { align-items: $al;}
-  @if $just { justify-content: $just;}
+  @if $dir  { flex-direction: $dir;   }
+  @if $al   { align-items: $al;       }
+  @if $just { justify-content: $just; }
   
 }
 
 
 ///Global styles
 body {
-  font-family: $font-fam;
+  font-family: 'Nunito Sans', sans-serif;
   background: $bg-col;
   color: $text-col;
   margin: 0 auto;

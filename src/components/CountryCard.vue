@@ -42,12 +42,19 @@ props: {
 <style lang="scss">
  @import '../assets/style.scss'; 
 
+
 .country-card {
-    margin: 20px;
+    margin: 36px;
     border-radius: 5px;
     cursor: pointer; 
     background: white;
     min-height: 330px;
+    transition: all .3s;
+    &:hover {
+      transform: scale(1.005);
+      filter: drop-shadow(0 0 .75rem $shadow-light)
+    }
+
     img { 
       border-radius: 5px 5px 0 0; 
       height: 160px;
@@ -71,5 +78,12 @@ props: {
  }
  body.dark-mode .country-card {
    background: $el-bg-dark-mode;
+   &:hover {
+      filter: drop-shadow(0 0 .75rem $shadow-dark)
+    }
+ }
+
+ @media only screen and (max-width:680px) {
+   .country-card { margin: 20px;}
  }
 </style>

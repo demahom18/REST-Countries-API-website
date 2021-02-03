@@ -31,9 +31,10 @@ export default {
     @include flex('', center, center);
     flex-wrap: wrap;
     max-width: 1440px;
+    
     > * {
       flex-basis: 265px;
-      width:min(90vw, 265px);
+      width: min(90vw, 265px);
     }
   }
 
