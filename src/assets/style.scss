@@ -16,33 +16,35 @@ $text-dark-mode: hsl(0, 0%, 100%);
 $bg-dark-mode : hsl(207, 26%, 17%);
 $el-bg-dark-mode : hsl(209, 23%, 22%);
 
+/// Boilerplate mixin for flexbox
+///
+/// @param { string } $dir flex-direction / default to row 
+/// @param { string } $al align-items 
+/// @param { string } $just justify-content 
+///
+@mixin flex($dir: '', $al:'', $just: '' ) {
+  display: flex;
+  @if $dir { flex-direction: $dir;}
+  @if $al { align-items: $al;}
+  @if $just { justify-content: $just;}
+  
+}
 
-//Global styles
+
+///Global styles
 body {
   font-family: $font-fam;
   background: $bg-col;
   color: $text-col;
   margin: 0 auto;
-}
 
-///DarkMode
-body.dark-mode{
-  background: $bg-dark-mode;
-  color: $text-dark-mode;
+  //DarkMode
+  &.dark-mode{
+    background: $bg-dark-mode;
+    color: $text-dark-mode;
+  }
 }
 
 img {
   max-width: 100%;
-}
-/// Boilerplate flexbox
-///
-/// @param { string } $dir direction column or row / default row 
-/// @param { string } $al align-items 
-/// @param { string } $just justify-content 
-///
-@mixin flex($dir: row, $al, $just ) {
-  display: flex;
-  @if $dir { flex-direction: $dir;}
-  @if $al { align-items: $al;}
-  @if $just { justify-content: $just;}
 }

@@ -10,7 +10,6 @@ export default {
     setTheme() {
       const body = this.$el.parentNode.parentNode
       body.classList.toggle('dark-mode')
-      console.log(body.classList)
     }
   }
 }
