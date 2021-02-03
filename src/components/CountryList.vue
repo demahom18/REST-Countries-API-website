@@ -1,5 +1,8 @@
 <template>
-  <section class="country-list">
+  <section 
+    class="country-list" 
+    v-if="countries.length > 0"
+  >
     <CountryCard  
       v-for="country in countries"
       :country="country" 
@@ -7,19 +10,37 @@
       @click="$emit(`redirectTo`, country)"
     />
   </section>
+  <div v-else>
+    <h2>No result found</h2>
+  </div>
 </template>
 
 <script >
+import { inject, computed } from 'vue'
 import CountryCard from './CountryCard.vue'
+
 export default {
   name: 'CountryList',
   emits: ['redirectTo'],
   components: { CountryCard },
-  props: {
-    countries: {
-      type: Object,
-      required: true 
-    }
+  setup() {
+    const countries = inject('countries')
+    const countriesFiltered = inject('countriesFiltered')
+
+    const countriesToDisplay = computed(() => {
+      if (countriesFiltered.value != undefined) {
+        return countriesFiltered.value  
+      }
+      else return countries.value
+    })
+    // onBeforeUpdate(() => {
+    //   setTimeout(()=> {
+    //     console.log()
+    //   }, 5000)
+    // })
+    return { countries: countriesToDisplay, countriesFiltered }
+
+    
   }
 }
 </script>
