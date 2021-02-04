@@ -5,15 +5,20 @@
           <input 
             type="text" 
             placeholder="Search for a country..."
-            v-model="searchText"
-            @input="$emit('search', countriesFiltered)"
+            v-model="search"
+            @input="searchCountries"
           />
         </div>
         <div>
-          <select name="filter" id="filter">
+          <select 
+            name="filter" 
+            id="filter"
+            v-model="region"
+            @change="searchByZone"
+          >
             <option value="">Search by region</option>
             <option value="Africa">Africa</option>
-            <option value="America">America</option>
+            <option value="Americas">America</option>
             <option value="Asia">Asia</option>
             <option value="Europe">Europe</option>
             <option value="Oceania">Oceania</option>
@@ -24,40 +29,62 @@
 </template>
 <script>
 // $emit('search', countriesFiltered)
-import { onBeforeMount, inject, ref, computed } from 'vue'
+import { inject, ref, computed } from 'vue'
 export default {
   name: 'SearchBox',
   emits: ['search'],
   setup() {
-    const searchText = ref('')
+    const search = ref('')
+    const region = ref()
+    const countriesByRegion = ref()
+
     const countries = inject('countries')
+    const countriesToShow = ref()
+    countriesToShow.value = countries.value
     
-    const countriesFiltered  = computed(() => {
-      let countriesInjected = Array.from(countries.value)
-      let text = searchText.value.toLowerCase()
-      console.log('text: ', countriesInjected)
-      return countriesInjected.filter( 
-        country => country.name.toLowerCase().includes(text))
+    const countriesFiltered = computed({
+      get: () => countriesToShow,
+
+      set: newVal => countriesToShow.value = newVal
     })
-    // const searchCountries = () => {
-    //   console.log('searchText: ', searchText.value)
-     
-    //     console.log('searchText end: ', searchText.value)
-    // }
-    // watch(searchText, () => searchCountries())
 
     return {
-      searchText,
-      countriesFiltered,
-      // searchCountries
+      search,
+      region,
+      countries,
+      countriesToShow,
+      countriesByRegion,
+      countriesFiltered
     }
   },
-  // methods: {
-  //   filterCountries() {
-  //     console.log('methods:', this.countriesFiltered)
-  //     this.$emit('search', this.countriesFiltered)
-  //   }
-  // }
+  methods: {
+    searchByZone() { 
+      this.countriesByRegion = Array.from(
+          this.countries).filter(
+            country => country.region == this.region
+        )     
+      this.countriesFiltered = this.countriesByRegion
+      this.$emit('search', this.countriesToShow)
+    },
+    searchCountries() {      
+      if (this.region) {
+        
+        this.countriesFiltered = Array.from(
+          this.countriesByRegion).filter(
+            country => country.name.toLowerCase().includes(this.search)
+          )
+        this.$emit('search', this.countriesToShow)
+      }
+
+      else { 
+        this.countriesFiltered = Array.from(
+          this.countries).filter( 
+            country => country.name.toLowerCase().includes(this.search))
+        // console.log('countries found:',this.countriesToShow, this.region)
+        this.$emit('search', this.countriesToShow)
+      }
+    }
+  }
 }
 </script>
 

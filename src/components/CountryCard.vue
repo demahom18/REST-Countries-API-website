@@ -42,7 +42,6 @@ props: {
 <style lang="scss">
  @import '../assets/style.scss'; 
 
-
 .country-card {
     margin: 36px;
     border-radius: 5px;

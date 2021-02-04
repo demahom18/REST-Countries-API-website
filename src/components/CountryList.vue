@@ -33,14 +33,8 @@ export default {
       }
       else return countries.value
     })
-    // onBeforeUpdate(() => {
-    //   setTimeout(()=> {
-    //     console.log()
-    //   }, 5000)
-    // })
-    return { countries: countriesToDisplay, countriesFiltered }
 
-    
+    return { countries: countriesToDisplay }
   }
 }
 </script>

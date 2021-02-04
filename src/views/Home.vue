@@ -40,9 +40,6 @@ export default {
     provide('countries', countries)
     provide('countriesFiltered', countriesFiltered)
     
-    
-    
-    
     const gotoDetail = country => {
       console.log(country)
     }
