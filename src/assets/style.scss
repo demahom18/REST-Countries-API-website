@@ -6,16 +6,17 @@
   margin:0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Nunito Sans', sans-serif;
 }
 
-///Variables: 
+/*Variables: */
 $text-col : hsl(200, 15%, 8%);
 $bg-col : hsl(0, 0%, 98%);
 $text-dark-mode: hsl(0, 0%, 100%); 
 $bg-dark-mode : hsl(207, 26%, 17%);
 $el-bg-dark-mode : hsl(209, 23%, 22%);
-$shadow-light:  #ddd;
-$shadow-dark:  #111;
+$shadow-light:  #bbb;
+$shadow-dark:  #000;
 
 /// mixin for flexbox
 ///
@@ -31,8 +32,29 @@ $shadow-dark:  #111;
   
 }
 
+/// add a drop shadow to an element
+///
+/// @param {*} $col color 
+/// @param {*} $x x direction 
+/// @param {*} $y y direction 
+/// @param {*} $blur blur 
+///
+@mixin d-shadow ($col: $shadow-light, $x: 0, $y: 0, $blur: 1rem) {
+  filter: drop-shadow($x $y $blur $col);
+}
 
-///Global styles
+
+///unset input and select field default value
+@mixin unsetField {
+  margin: 16px;
+  border-radius:5px;
+  border:none;
+  outline: none;
+  appearance: none;
+  background: white;
+}
+
+//Global styles
 body {
   font-family: 'Nunito Sans', sans-serif;
   background: $bg-col;

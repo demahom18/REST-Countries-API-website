@@ -52,8 +52,4 @@ export default {
       width: min(90vw, 265px);
     }
   }
-
-  
-
- 
 </style>

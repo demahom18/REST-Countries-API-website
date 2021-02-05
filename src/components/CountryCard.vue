@@ -44,14 +44,14 @@ props: {
 
 .country-card {
     margin: 36px;
+    transform: translateZ(0);
     border-radius: 5px;
     cursor: pointer; 
     background: white;
     min-height: 330px;
     transition: all .3s;
     &:hover {
-      transform: scale(1.005);
-      filter: drop-shadow(0 0 .75rem $shadow-light)
+      @include d-shadow();
     }
 
     img { 
@@ -78,7 +78,7 @@ props: {
  body.dark-mode .country-card {
    background: $el-bg-dark-mode;
    &:hover {
-      filter: drop-shadow(0 0 .75rem $shadow-dark)
+      @include d-shadow($shadow-dark)
     }
  }
 

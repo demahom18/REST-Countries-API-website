@@ -11,7 +11,7 @@
             :class="{ dark: isDarkMode }"
           />
         </svg>
-        <span>Dark Mode</span> 
+        <span><span>{{ themeText }}</span> Mode</span> 
       </div>
     </div>
   </nav>
@@ -23,17 +23,24 @@ export default {
   emits: ['toggleTheme'],
   setup() {
     const isDarkMode = ref(false)
-  
-    const toggleDarkMode = 
-      () =>  isDarkMode.value = !isDarkMode.value
-    
-    return { toggleDarkMode, isDarkMode }
+    const themeText = ref('Dark')
+    const toggleDarkMode = () =>  {
+      isDarkMode.value = !isDarkMode.value
+      if(isDarkMode.value) themeText.value  = 'Light'
+      else themeText.value = 'Dark'
+    }
+    return { 
+      toggleDarkMode,
+      isDarkMode,
+      themeText 
+    }
   }
 }
 </script>
 
 <style lang="scss">
  @import '../assets/style.scss'; 
+ 
 nav {
   width:100%;
   background: white;
@@ -47,12 +54,12 @@ nav {
   font-weight: 800;
 
   h1 {
-    font-size: clamp(14px, 5vw, 24px);
+    font-size: clamp(14px, 5.5vw, 24px);
   }
 
   div {
     font-weight: 600;
-    font-size: clamp(12px, 4vw, 16px);
+    font-size: clamp(12px, 3.6vw, 16px);
     cursor: pointer;
     align-items: center;
     @include flex('', center, '');
@@ -67,7 +74,10 @@ nav {
 body.dark-mode nav {
   background: $el-bg-dark-mode;
 }
-// @media only screen and (min-width:1520px){
-//   nav { padding: 30px 80px;}
-// }
+@media only screen and (max-width:400px) {
+  nav svg {
+    width: 15px;
+    height:14px;
+  }
+}
 </style>

@@ -14,12 +14,11 @@ export default {
   }
 }
 </script>
-<style>
+<style lang="scss">
+@import './assets/style.scss';
+
 #app {
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  @include flex(column, center, center);
 }
 </style>
