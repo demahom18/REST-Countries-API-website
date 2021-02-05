@@ -1,30 +1,36 @@
 <template>
   <div class="country-card">
-    <img 
-      :src="country.flag" 
-      :alt="`${country.name} flag`"
-    />
-    <div class="country-infos">
-      <span>
-        <h2>{{ country.name }}</h2>
-      </span>
+    <router-link 
+      :to="{ 
+        name: 'CountryDetail', 
+        params: { countryname: country.name }
+      }"
+    >
+      <img 
+        :src="country.flag" 
+        :alt="`${country.name} flag`"
+      />
+      <div class="country-infos">
+        <span>
+          <h2>{{ country.name }}</h2>
+        </span>
 
-      <span>
-        <h3>Population: </h3>
-        <p>{{ country.population }}</p>
-      </span>
+        <span>
+          <h3>Population: </h3>
+          <p>{{ country.population }}</p>
+        </span>
 
-      <span>
-        <h3>Region: </h3>
-        <p>{{ country.region }}</p>
-      </span>
+        <span>
+          <h3>Region: </h3>
+          <p>{{ country.region }}</p>
+        </span>
 
-      <span>
-        <h3>Capital: </h3>
-        <p>{{ country.capital }}</p>
-      </span>
-    </div>
-     
+        <span>
+          <h3>Capital: </h3>
+          <p>{{ country.capital }}</p>
+        </span>
+      </div>
+    </router-link>
   </div>
 </template>
 
@@ -75,6 +81,7 @@ props: {
   }
   
  }
+ 
  body.dark-mode .country-card {
    background: $el-bg-dark-mode;
    &:hover {

@@ -3,14 +3,14 @@
     <SearchBox @search="getCountriesFiltered" />
     <template v-if="countries">
       <CountryList 
-        @redirect-to="gotoDetail"
+        @show-detail="gotoDetailPage"
       />
     </template>
   </div>
 </template>
 
 <script>
-import { provide, ref } from 'vue'
+import { inject, provide, ref } from 'vue'
 import CountryList from '../components/CountryList.vue'
 import SearchBox from '../components/SearchBox.vue'
 
@@ -21,24 +21,15 @@ export default {
     SearchBox,
   },
   setup() {
-    const countries = ref({})
+    const countries = inject('countries')
     const countriesFiltered = ref()
-    const getCountries =  url => {
-      fetch(url)
-        .then(res   => res.json())
-        .then(data  => countries.value = data)
-        .catch(err  => console.error(err))
-    }
     
-    getCountries('https://restcountries.eu/rest/v2/all')
-
     const getCountriesFiltered = 
       countriesFound => countriesFiltered.value = countriesFound
-   
-    provide('countries', countries)
-    provide('countriesFiltered', countriesFiltered)
     
-    const gotoDetail = country => {
+    provide('countriesFiltered', countriesFiltered)
+
+    const gotoDetailPage = country => {
       console.log(country)
     }
 
@@ -48,7 +39,7 @@ export default {
     
     return { 
       countries, 
-      gotoDetail,
+      gotoDetailPage,
       showCountries,
       getCountriesFiltered
     }

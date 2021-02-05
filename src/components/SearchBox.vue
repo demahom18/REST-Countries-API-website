@@ -13,7 +13,7 @@
             @input="searchByName"
           />
         </div>
-        <div class="select-region">
+        <div>
           <select 
             v-model="region"
             @change="searchByRegion"
@@ -39,7 +39,7 @@ export default {
     const search = ref('')
     const region = ref()
     const countriesByRegion = ref()
-
+    
     const countries = inject('countries')
     const countriesToShow = ref()
     

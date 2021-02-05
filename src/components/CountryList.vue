@@ -7,7 +7,7 @@
       v-for="country in countries"
       :country="country" 
       :key="country.name"
-      @click="$emit(`redirectTo`, country)"
+      @click="$emit(`showDetail`, country)"
     />
   </section>
   <div v-else>
@@ -21,7 +21,7 @@ import CountryCard from './CountryCard.vue'
 
 export default {
   name: 'CountryList',
-  emits: ['redirectTo'],
+  emits: ['showDetail'],
   components: { CountryCard },
   setup() {
     const countries = inject('countries')
