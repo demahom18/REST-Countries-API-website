@@ -32,11 +32,9 @@ export default {
     
     getCountries('https://restcountries.eu/rest/v2/all')
 
-    const getCountriesFiltered = countriesFound => {
-      countriesFiltered.value = countriesFound
-      console.log('in Home: ',countriesFiltered.value)
-    }
-    
+    const getCountriesFiltered = 
+      countriesFound => countriesFiltered.value = countriesFound
+   
     provide('countries', countries)
     provide('countriesFiltered', countriesFiltered)
     

@@ -6,7 +6,7 @@
             type="text" 
             placeholder="Search for a country..."
             v-model="search"
-            @input="searchCountries"
+            @input="searchByName"
           />
         </div>
         <div>
@@ -14,7 +14,7 @@
             name="filter" 
             id="filter"
             v-model="region"
-            @change="searchByZone"
+            @change="searchByRegion"
           >
             <option value="">Search by region</option>
             <option value="Africa">Africa</option>
@@ -28,7 +28,7 @@
     </div>
 </template>
 <script>
-// $emit('search', countriesFiltered)
+
 import { inject, ref, computed } from 'vue'
 export default {
   name: 'SearchBox',
@@ -40,7 +40,6 @@ export default {
 
     const countries = inject('countries')
     const countriesToShow = ref()
-    countriesToShow.value = countries.value
     
     const countriesFiltered = computed({
       get: () => countriesToShow,
@@ -58,31 +57,39 @@ export default {
     }
   },
   methods: {
-    searchByZone() { 
-      this.countriesByRegion = Array.from(
-          this.countries).filter(
-            country => country.region == this.region
-        )     
-      this.countriesFiltered = this.countriesByRegion
-      this.$emit('search', this.countriesToShow)
+    searchByRegion() { 
+      if (this.region && this.region.length > 0) {
+        this.countriesByRegion = this.filterByRegion(this.countries, this.region)
+        this.countriesFiltered = this.countriesByRegion
+        this.$emit('search', this.countriesToShow)
+      }
+      else {
+        this.$emit('search', this.countries)
+      }
     },
-    searchCountries() {      
-      if (this.region) {
-        
-        this.countriesFiltered = Array.from(
-          this.countriesByRegion).filter(
-            country => country.name.toLowerCase().includes(this.search)
-          )
+    searchByName() {      
+      if (this.region && this.region.length > 0) {
+        this.countriesFiltered = this.filterByName(this.countriesByRegion, this.search)
         this.$emit('search', this.countriesToShow)
       }
-
       else { 
-        this.countriesFiltered = Array.from(
-          this.countries).filter( 
-            country => country.name.toLowerCase().includes(this.search))
-        // console.log('countries found:',this.countriesToShow, this.region)
+        this.countriesFiltered = this.filterByName(this.countries, this.search)
         this.$emit('search', this.countriesToShow)
       }
+    },
+    /**
+     * Filter an iterator by the name of its items.
+     * 
+     * @param {*} iter iterator to filter
+     * @param {*} input the input to filter by name
+     * @returns { Array } the array filtered
+     */
+    filterByName (iter, input) {
+      return Array.from(iter).filter(it => it.name.toLowerCase().includes(input))
+    },
+    //Same as filterByName 
+    filterByRegion (iter, reg) {
+      return Array.from(iter).filter(it => it.region.includes(reg))
     }
   }
 }
