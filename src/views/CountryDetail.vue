@@ -1,7 +1,7 @@
 <template>
   <div class="btn-wrap">
     <router-link :to="{ name: 'Home' }">
-      <div class="btn-back">
+      <div class="btn back">
       <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path fill-rule="evenodd" clip-rule="evenodd" d="M5.81802 3.6967L6.87868 4.75736L3.3785 8.25754H16.7428L16.7428 9.74246H3.3785L6.87868 13.2426L5.81802 14.3033L0.514719 9L5.81802 3.6967Z" fill="#111517"/>
       </svg>
@@ -30,31 +30,67 @@
         </div>
         <div class="infos2">
           <p>
-            <b>Top level domain: </b>{{ country.topLevelDomain }}<br> 
-            <b>Currencies: </b>{{ country.currencies }}<br> 
-            <b>Languages: </b>{{ country.languages }}<br> 
+            <b>Top Level Domain: </b>
+            <span
+              v-for="domain in country.topLevelDomain"
+              :key="domain"
+            >{{ domain }}
+            </span> <br>
+
+            <b>Currencies: </b>
+            <span 
+              v-for="currency in country.currencies"
+              :key="currency.code"
+            >{{ currency.name }}
+            </span><br> 
+
+            <b>Languages: </b>
+            <span 
+              v-for="language in country.languages"
+              :key="language.name"
+              class="language"
+            >{{ language.name }}
+            </span><br> 
           </p>
         </div>
       </div>
       <div class="borders">
-        <p><b>Border Countries: </b>{{ country.borders }}</p>
+        <p>
+          <b>Border Countries: </b>
+          <div>
+            <span 
+              v-for="border in country.borders" 
+              :key="border"
+              class="border-pill btn"
+            >{{ border }}
+            </span>
+          </div> 
+        </p>
       </div>
     </div>
   </div>
 </template>
 <script>
-import { inject } from 'vue'
+import { computed, inject } from 'vue'
 import { useRoute } from 'vue-router'
 
 export default {
-  setup() {
+  props: {
+    countryname: {
+      type: String,
+      required: true
+    }
+  },
+  setup(props) {
     const route = useRoute()
     const countries = inject('countries')
-
-    const country = Array.from(countries.value)
+    // console.log(props.countryname)
+    const country = computed(() => {
+      return Array.from(countries.value)
       .find(country => country.name === route.params.countryname)
+    })
       
-    return { country }
+    return { country, countries }
   }
 }
 </script>
@@ -64,32 +100,41 @@ export default {
 .button-wrap {
   position: relative;
   height:100px;
+  left:0;
 }
 
-.btn-back {
-  @include flex();
+.btn {
   background: white;
   cursor:pointer;
-  position: absolute;
+  border-radius: 2px;
   padding: 7px 24px;
-  margin: 40px 0;
-  left:180px;
-  transform: translateX(-100%);
-  
+  width: 136px;
+
+  &.back {
+    margin: 40px 30px;
+    @include flex();
+    left:0px;
+    transform: translateX(-100%);
+    position: absolute;
+
+    span { 
+      padding: 0 8px; 
+      font-size: 14px;
+    }
+  }
+
   &:hover {
     @include d-shadow($shadow-light, 0, 0, 7px);
   }
 
-  span { 
-    padding: 0 8px; 
-    font-size: 14px;
-  }
+ 
 }
 
 .detail{
   @include flex('', center, center);
   flex-wrap: wrap;
   margin-top: 130px;
+  margin-bottom: 60px;
     
   > * {
     flex-basis: 560px;
@@ -112,9 +157,28 @@ export default {
     margin: 16px 0;
     line-height: 32px;
   }
+
+  .infos2, .borders {
+    span {
+      margin: 5px;
+      width: 90px;
+    }
+    
+  }
+  .borders div {
+    @include flex();
+    flex-wrap: wrap;
+    margin-top:16px;
+  }
+
+
+  .language:after {
+    position: absolute;
+    content: ',';
+  }
 }
 
-body.dark-mode  .btn-back{
+body.dark-mode  .btn{
   background: $el-bg-dark-mode;
   
   &:hover {
@@ -127,8 +191,12 @@ body.dark-mode  .btn-back{
 }
 
 @media only screen and (max-width:630px) {
-  .btn-back {
-    left: 130px;
+  .btn.back {
+    left: 100px;
+    width:100px;
+    padding: 7px 15px;
+
+    
   }
   
   .detail {
@@ -145,9 +213,14 @@ body.dark-mode  .btn-back{
   p, b, span {
     font-size: 16px !important;
   } 
+
+  .btn.back {
+    transform: translateX(0);
+  }
 }
 
 @media only screen and (min-width:1030px) {
+
   .infos {
     padding: 0 0 0 min(120px, 9vw);
     margin-right: 80px;
@@ -173,6 +246,16 @@ body.dark-mode  .btn-back{
 
     .infos1, .infos2 {
       transform: translateY(50px);
+    }
+  }
+  .borders {
+    margin: 50px 0;
+    position: relative;
+    div {
+      top: calc(-110%);
+      left: 15ch;
+      width:100%;
+      position: absolute;
     }
   }
 }

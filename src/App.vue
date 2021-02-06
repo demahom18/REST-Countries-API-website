@@ -34,6 +34,6 @@ export default {
 
 #app {
   width: 100%;
-  @include flex(column, center, center);
+  @include flex(column, '', center);
 }
 </style>
