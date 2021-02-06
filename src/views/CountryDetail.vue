@@ -17,42 +17,38 @@
       />
     </div>
     <div class="infos">
-      <div>
-        <div class="infos1">
-          <h2>{{ country.name }}</h2>
-          <p>
-            <b>Native name: </b>{{ country.nativeName }}<br> 
-            <b>Population: </b>{{ country.population }}<br>   
-            <b>Region: </b>{{ country.region }}<br> 
-            <b>Sub Region: </b>{{ country.subregion }}<br>  
-            <b>Capital: </b>{{ country.capital }}<br>
-          </p>
-        </div>
-        <div class="infos2">
-          <p>
-            <b>Top Level Domain: </b>
-            <span
-              v-for="domain in country.topLevelDomain"
-              :key="domain"
-            >{{ domain }}
-            </span> <br>
+      <h2>{{ country.name }}</h2>
+      <div class="infos1">
+        <p>
+          <b>Native name: </b>{{ country.nativeName }}<br> 
+          <b>Population: </b>{{ country.population }}<br>   
+          <b>Region: </b>{{ country.region }}<br> 
+          <b>Sub Region: </b>{{ country.subregion }}<br>  
+          <b>Capital: </b>{{ country.capital }}<br>
+        </p>
+        <p>
+          <b>Top Level Domain: </b>
+          <span
+            v-for="domain in country.topLevelDomain"
+            :key="domain"
+          >{{ domain }}
+          </span> <br>
 
-            <b>Currencies: </b>
-            <span 
-              v-for="currency in country.currencies"
-              :key="currency.code"
-            >{{ currency.name }}
-            </span><br> 
+          <b>Currencies: </b>
+          <span 
+            v-for="currency in country.currencies"
+            :key="currency.code"
+          >{{ currency.name }}
+          </span><br> 
 
-            <b>Languages: </b>
-            <span 
-              v-for="language in country.languages"
-              :key="language.name"
-              class="language"
-            >{{ language.name }}
-            </span><br> 
-          </p>
-        </div>
+          <b>Languages: </b>
+          <span 
+            v-for="language in country.languages"
+            :key="language.name"
+            class="language"
+          >{{ language.name }}
+          </span><br> 
+        </p>
       </div>
       <div class="borders">
         <p>
@@ -191,21 +187,19 @@ export default {
     font-size: 32px;      
   }  
 
-  .infos1, .infos2 {
-    margin: 16px 0;
-    line-height: 32px;
+  .infos1 p {
+      line-height: 32px;
+      margin: 16px 0 32px;
   }
 
-  .infos2, .borders {
-    span {
-      margin: 5px;
-      // width: 90px;
-    }
-  }
   .borders div {
     @include flex();
     flex-wrap: wrap;
     margin-top:16px;
+    
+    .border-pill {
+      margin: 5px;
+    }
   }
 
   .language:after {
@@ -260,7 +254,7 @@ body.dark-mode  .btn{
     margin-right: 80px;
     justify-content: space-between;
 
-    > div:first-child {
+    .infos1 {
       @include flex();
       flex-wrap: wrap;
       gap: max(50px, 7vw);
@@ -271,22 +265,10 @@ body.dark-mode  .btn{
       }
     }
   }
-
-  .detail {
-    h2 {
-      position: absolute;
-      transform: translateY(-70px);
-    }
-
-    .infos1, .infos2 {
-      transform: translateY(50px);
-    }
-  }
   .borders {
-    margin: 50px 0;
     position: relative;
     div {
-      top: calc(-110%);
+      top: -110%;
       left: 15ch;
       width:100%;
       position: absolute;
