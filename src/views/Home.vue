@@ -2,9 +2,7 @@
   <div class="home">
     <SearchBox @search="getCountriesFiltered" />
     <template v-if="countries">
-      <CountryList 
-        @show-detail="gotoDetailPage"
-      />
+      <CountryList />
     </template>
   </div>
 </template>
@@ -29,9 +27,9 @@ export default {
     
     provide('countriesFiltered', countriesFiltered)
 
-    const gotoDetailPage = country => {
-      console.log(country)
-    }
+    // const gotoDetailPage = country => {
+    //   console.log(country)
+    // }
 
     const showCountries = countries => {
       console.log(countries)
@@ -39,7 +37,7 @@ export default {
     
     return { 
       countries, 
-      gotoDetailPage,
+      // gotoDetailPage,
       showCountries,
       getCountriesFiltered
     }

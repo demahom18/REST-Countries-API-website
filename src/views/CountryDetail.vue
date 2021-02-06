@@ -55,7 +55,7 @@
           <b>Border Countries: </b>
           <div>
             <span 
-              v-for="border in bordersName" 
+              v-for="border in borders" 
               :key="border"
               class="border-pill btn"
               @click="gotoPage(border)"
@@ -68,8 +68,8 @@
   </div>
 </template>
 <script>
-import { computed, inject, onMounted, ref } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { computed, inject, ref } from 'vue'
+import { useRouter } from 'vue-router'
 
 export default {
   props: {
@@ -79,41 +79,42 @@ export default {
     }
   },
   setup(props) {
-    const route = useRoute()
     const router = useRouter()
     const countries = inject('countries')
     const countryBorders = ref([])
-    const  bordersName = ref([])
-
+    
     const country = computed(() => {
       return Array.from(countries.value)
-      .find(country => country.name === route.params.countryname)
+      .find(country => country.name === props.countryname)
     })
 
-    onMounted(() => {
-      let borders = Array.from(country.value.borders)
-      let bordersCode = ref([]) 
-      
-      for (let i=0, l=borders.length; i < l; i++) {
-        bordersCode.value.push(Array.from(countries.value).filter(
-          country => country.alpha3Code == borders[i]))
+    const borders = computed(() => {
+      let namesRaw = ref([]) 
+      let bordersRaw = Array.from(country.value.borders)
+        
+      //Get the names of the borders with the alpha3Code
+      for (let i=0, l = bordersRaw.length; i < l; i++) {
+        namesRaw.value.push(Array.from(countries.value).filter(
+          country => country.alpha3Code == bordersRaw[i]))
       }
-      Array.from(bordersCode.value).forEach(
-        b => countryBorders.value.push(b[0].name))
 
-      let countryBordersFormatted = []
+      //Convert the code to the country's name
+      countryBorders.value = [...namesRaw.value].map( n =>  n[0].name)
+        
+      //Format the name to get rid of the parenthesis
+      let namesFormatted = ref([])
       Array.from(countryBorders.value)
         .forEach(bord => {
-          countryBordersFormatted.push(bord.toString().split(' ('))
+          namesFormatted.value.push(bord.toString().split(' ('))
         })
-        countryBordersFormatted.forEach(
-          b => bordersName.value.push(b[0]))
+        
+      //Take the element at the first index to keep the name short
+      let bordersShort = namesFormatted.value.map(
+        b => b[0])
 
-        console.log('formated', bordersName.value, countryBorders.value)
-
-      return { bordersName, countryBorders }
+      return bordersShort
     })
-
+    
     const gotoPage = border => {
       let countryToGo = Array.from(countryBorders.value)
         .find(c => c.includes(border))
@@ -124,7 +125,7 @@ export default {
       })
     }
          
-    return { country, gotoPage, bordersName }
+    return { country, gotoPage, borders }
   }
 }
 </script>
