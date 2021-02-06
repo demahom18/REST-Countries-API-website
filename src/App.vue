@@ -36,4 +36,10 @@ export default {
   width: 100%;
   @include flex(column, '', center);
 }
+
+@media only screen and (min-width: 1030px) {
+  #app {
+    align-items: center;
+  }
+}
 </style>

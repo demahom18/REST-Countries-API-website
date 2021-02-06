@@ -59,10 +59,11 @@
           <b>Border Countries: </b>
           <div>
             <span 
-              v-for="border in country.borders" 
+              v-for="border in bordersName" 
               :key="border"
               class="border-pill btn"
-            >{{ border }}
+              @click="gotoPage(border)"
+            > {{ border }}
             </span>
           </div> 
         </p>
@@ -71,8 +72,8 @@
   </div>
 </template>
 <script>
-import { computed, inject } from 'vue'
-import { useRoute } from 'vue-router'
+import { computed, inject, onMounted, ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 
 export default {
   props: {
@@ -83,14 +84,51 @@ export default {
   },
   setup(props) {
     const route = useRoute()
+    const router = useRouter()
     const countries = inject('countries')
-    // console.log(props.countryname)
+    const countryBorders = ref([])
+    const  bordersName = ref([])
+
     const country = computed(() => {
       return Array.from(countries.value)
       .find(country => country.name === route.params.countryname)
     })
+
+    onMounted(() => {
+      let borders = Array.from(country.value.borders)
+      let bordersCode = ref([]) 
       
-    return { country, countries }
+      for (let i=0, l=borders.length; i < l; i++) {
+        bordersCode.value.push(Array.from(countries.value).filter(
+          country => country.alpha3Code == borders[i]))
+      }
+      Array.from(bordersCode.value).forEach(
+        b => countryBorders.value.push(b[0].name))
+
+      let countryBordersFormatted = []
+      Array.from(countryBorders.value)
+        .forEach(bord => {
+          countryBordersFormatted.push(bord.toString().split(' ('))
+        })
+        countryBordersFormatted.forEach(
+          b => bordersName.value.push(b[0]))
+
+        console.log('formated', bordersName.value, countryBorders.value)
+
+      return { bordersName, countryBorders }
+    })
+
+    const gotoPage = border => {
+      let countryToGo = Array.from(countryBorders.value)
+        .find(c => c.includes(border))
+
+      router.push({
+        name: 'CountryDetail', 
+        params: { countryname: countryToGo}
+      })
+    }
+         
+    return { country, gotoPage, bordersName }
   }
 }
 </script>
@@ -108,9 +146,9 @@ export default {
   cursor:pointer;
   border-radius: 2px;
   padding: 7px 24px;
-  width: 136px;
 
   &.back {
+    width: 136px;
     margin: 40px 30px;
     @include flex();
     left:0px;
@@ -161,16 +199,14 @@ export default {
   .infos2, .borders {
     span {
       margin: 5px;
-      width: 90px;
+      // width: 90px;
     }
-    
   }
   .borders div {
     @include flex();
     flex-wrap: wrap;
     margin-top:16px;
   }
-
 
   .language:after {
     position: absolute;
@@ -195,8 +231,6 @@ body.dark-mode  .btn{
     left: 100px;
     width:100px;
     padding: 7px 15px;
-
-    
   }
   
   .detail {
