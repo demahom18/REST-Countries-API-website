@@ -65,7 +65,7 @@ nav {
     @include flex('', center, '');
   }
 
-  span { padding-left: 8px;}
+  span { padding-left: 4px;}
 
   path.dark {
     stroke: white;

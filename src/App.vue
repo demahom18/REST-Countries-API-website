@@ -8,7 +8,7 @@ import { ref, provide } from 'vue'
 import NavBar from './components/NavBar.vue'
 export default {
   components: { NavBar },
-  setup(props, context) {
+  setup() {
     const countries = ref({})
     const getCountries =  url => {
       fetch(url)
