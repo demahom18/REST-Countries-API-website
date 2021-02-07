@@ -27,7 +27,7 @@ export default {
     if (window.matchMedia('prefers-color-scheme: light').matches) {
       // It's a dark theme...
       return  window.document.body.classList.add('dark-mode')
-    } 
+    }
 
     const setTheme = () => {
       window.document.body
