@@ -1,68 +1,70 @@
 <template>
-  <div class="btn-wrap">
-    <router-link :to="{ name: 'Home' }">
-      <div class="btn back">
-      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path fill-rule="evenodd" clip-rule="evenodd" d="M5.81802 3.6967L6.87868 4.75736L3.3785 8.25754H16.7428L16.7428 9.74246H3.3785L6.87868 13.2426L5.81802 14.3033L0.514719 9L5.81802 3.6967Z" fill="#111517"/>
-      </svg>
-      <span>Back</span>
+  <div class="country-detail-page" v-if="country">
+    <div class="btn-wrap">
+      <router-link :to="{ name: 'Home' }">
+        <div class="btn back">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M5.81802 3.6967L6.87868 4.75736L3.3785 8.25754H16.7428L16.7428 9.74246H3.3785L6.87868 13.2426L5.81802 14.3033L0.514719 9L5.81802 3.6967Z" fill="#111517"/>
+          </svg>
+          <span>Back</span>
+        </div>
+      </router-link>
     </div>
-    </router-link>
-  </div>
-  <div class="detail">
-    <div class="flag">
-      <img 
-        :src="country.flag" 
-        :alt="`${country.name} flag`"
-      />
-    </div>
-    <div class="infos">
-      <h2>{{ country.name }}</h2>
-      <div class="infos1">
-        <p>
-          <b>Native name: </b>{{ country.nativeName }}<br> 
-          <b>Population: </b>{{ country.population }}<br>   
-          <b>Region: </b>{{ country.region }}<br> 
-          <b>Sub Region: </b>{{ country.subregion }}<br>  
-          <b>Capital: </b>{{ country.capital }}<br>
-        </p>
-        <p>
-          <b>Top Level Domain: </b>
-          <span
-            v-for="domain in country.topLevelDomain"
-            :key="domain"
-          >{{ domain }}
-          </span> <br>
-
-          <b>Currencies: </b>
-          <span 
-            v-for="currency in country.currencies"
-            :key="currency.code"
-          >{{ currency.name }}
-          </span><br> 
-
-          <b>Languages: </b>
-          <span 
-            v-for="language in country.languages"
-            :key="language.name"
-            class="language"
-          >{{ language.name + ', '}}
-          </span><br> 
-        </p>
+    <div class="detail">
+      <div class="flag">
+        <img 
+          :src="country.flag" 
+          :alt="`${country.name} flag`"
+        />
       </div>
-      <div class="borders">
-        <p>
-          <b>Border Countries: </b>
-          <div>
+      <div class="infos">
+        <h2>{{ country.name }}</h2>
+        <div class="infos1">
+          <p>
+            <b>Native name: </b>{{ country.nativeName }}<br> 
+            <b>Population: </b>{{ country.population }}<br>   
+            <b>Region: </b>{{ country.region }}<br> 
+            <b>Sub Region: </b>{{ country.subregion }}<br>  
+            <b>Capital: </b>{{ country.capital }}<br>
+          </p>
+          <p>
+            <b>Top Level Domain: </b>
+            <span
+              v-for="domain in country.topLevelDomain"
+              :key="domain"
+            >{{ domain }}
+            </span> <br>
+
+            <b>Currencies: </b>
             <span 
-              v-for="border in borders" 
-              :key="border"
-              class="border-pill btn"
-              @click="gotoPage(border)"
-            > {{ border }}
-            </span>
-          </div> 
-        </p>
+              v-for="currency in country.currencies"
+              :key="currency.code"
+            >{{ currency.name }}
+            </span><br> 
+
+            <b>Languages: </b>
+            <span 
+              v-for="language in country.languages"
+              :key="language.name"
+              class="language"
+            >{{ language.name + ', '}}
+            </span><br> 
+          </p>
+        </div>
+        <div class="borders">
+          <p>
+            <b>Border Countries: </b>
+            <div>
+              <span 
+                v-for="border in borders" 
+                :key="border"
+                class="border-pill btn"
+                @click="gotoPage(border)"
+              > {{ border }}
+              </span>
+            </div> 
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -128,6 +130,10 @@ export default {
 </script>
 <style lang="scss" >
 @import '../assets/style.scss';
+
+.country-detail-page {
+  transition: all .5s;
+}
 
 .button-wrap {
   position: relative;

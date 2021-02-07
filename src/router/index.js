@@ -1,20 +1,26 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import CountryDetail from '../views/CountryDetail.vue'
-
+import TransitionAnim from "../components/TransitionAnim.vue";
+;
 const routes = [
   {
-    path: '/',
-    name: 'Home',
-    component: Home
+    path: "/transition",
+    name: "TransitionAnim",
+    component: TransitionAnim,
   },
   {
-    path: '/country/:countryname',
-    name: 'CountryDetail',
+    path: "/",
+    name: "Home",
+    component: Home,
+  },
+  {
+    path: "/country/:countryname",
+    name: "CountryDetail",
     component: CountryDetail,
-    props: true
-  }
-]
+    props: true,
+  },
+];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),

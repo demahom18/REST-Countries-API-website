@@ -1,13 +1,16 @@
 <template>
   <NavBar @toggle-theme="setTheme"/>
-  <router-view/>
+    <router-view/>
 </template>
 <script>
 
 import { ref, provide } from 'vue'
 import NavBar from './components/NavBar.vue'
+
 export default {
-  components: { NavBar },
+  components: { 
+    NavBar
+  },
   setup() {
     const countries = ref({})
     const getCountries =  url => {
@@ -20,12 +23,20 @@ export default {
     getCountries('https://restcountries.eu/rest/v2/all')
     provide('countries', countries)
 
-  },
-  methods: {
-    setTheme() {
-      const body = this.$el.parentNode.parentNode
-      body.classList.toggle('dark-mode')
+    // Check if the darkmode is enabled
+    if (window.matchMedia('prefers-color-scheme: light').matches) {
+      // It's a dark theme...
+      return  window.document.body.classList.add('dark-mode')
+    } 
+
+    const setTheme = () => {
+      window.document.body
+        .classList.toggle('dark-mode')
     }
+   
+
+
+  return { setTheme }
   }
 }
 </script>
