@@ -11,24 +11,24 @@
         :alt="`${country.name} flag`"
       />
       <div class="country-infos">
-        <span>
+        <div>
           <h2>{{ country.name }}</h2>
-        </span>
+        </div>
 
-        <span>
+        <div>
           <h3>Population: </h3>
           <p>{{ country.population }}</p>
-        </span>
+        </div>
 
-        <span>
+        <div>
           <h3>Region: </h3>
           <p>{{ country.region }}</p>
-        </span>
+        </div>
 
-        <span>
+        <div>
           <h3>Capital: </h3>
           <p>{{ country.capital }}</p>
-        </span>
+        </div>
       </div>
     </router-link>
   </div>
@@ -73,7 +73,7 @@ props: {
    padding: 24px;
    p { padding: 0 5px;}
 
-   span {
+   div {
     @include flex('', center, '');
     &, h3 { font-size: 14px;}
     padding: 4px 0;
