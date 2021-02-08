@@ -12,7 +12,7 @@
           @input="searchByName"
         />
       </div>
-      <div>
+      <div class="select-region">
         <select 
           v-model="region"
           @change="searchByRegion"
@@ -24,6 +24,7 @@
           <option>Europe</option>
           <option>Oceania</option>
         </select>
+        <span></span>
       </div>
     </form>
   </div>
@@ -31,10 +32,8 @@
 <script>
 
 import { inject, ref, computed } from 'vue'
-import TransitionAnim from './TransitionAnim.vue'
 
 export default {
-  components: { TransitionAnim },
   name: 'SearchBox',
   emits: ['search'],
   setup() {
@@ -60,9 +59,10 @@ export default {
       countriesFiltered
     }
   },
+  //TODO put these methods in setup fucntion
   methods: {
     searchByRegion() { 
-      if (this.region && this.region.length > 0) {
+      if (this.region.length > 0) {
         this.countriesByRegion = 
           this.filterByRegion(this.countries, this.region)
         this.countriesFiltered = this.countriesByRegion
@@ -73,7 +73,7 @@ export default {
       }
     },
     searchByName() {      
-      if (this.region && this.region.length > 0) {
+      if (this.region.length > 0) {
         this.countriesFiltered = 
           this.filterByName(this.countriesByRegion, this.search)
         this.$emit('search', this.countriesToShow)
@@ -148,6 +148,22 @@ form {
       @include d-shadow($shadow-light, 0, 0, .3rem)
     }
   }
+
+  .select-region {
+    position: relative;
+    width:200px;
+    
+    span {
+      position:absolute;
+      width:12px;
+      height: 6px;
+      top: 47%;
+      right:0px;
+      pointer-events: none;
+      background-color: $text-col;
+      clip-path: polygon(20% 0, 50% 50%, 80% 0, 100% 20%, 50% 100%, 0 20%);
+    }
+  }
 }
 body.dark-mode form {
   select, option, input {
@@ -157,6 +173,9 @@ body.dark-mode form {
       color: white;
       @include d-shadow($shadow-dark, 0, 0, .3rem)
     }
+  }
+  span {
+    background: $text-dark-mode;
   }
   
 }

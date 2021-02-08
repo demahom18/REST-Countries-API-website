@@ -1,14 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
-import CountryDetail from '../views/CountryDetail.vue'
-import TransitionAnim from "../components/TransitionAnim.vue";
-;
+import CountryDetail from "../views/CountryDetail.vue";
 const routes = [
-  {
-    path: "/transition",
-    name: "TransitionAnim",
-    component: TransitionAnim,
-  },
   {
     path: "/",
     name: "Home",
