@@ -6,7 +6,7 @@ Any feedback is welcome to improve my code.
 
 ## The Challenge
 
-The challenge is to integrate with the REST Countries API to pull country data and display it like in the designs.
+The challenge is to integrate with the [REST Countries API](https://restcountries.eu) to pull country data and display it like in the designs.
 Users should be able to:
 
 - See all countries from the API on the homepage
