@@ -9,7 +9,7 @@
           type="text" 
           placeholder="Search for a country..."
           v-model="search"
-          @input="searchByName"
+          @keyup="searchByName"
         />
       </div>
       <div class="select-region">
