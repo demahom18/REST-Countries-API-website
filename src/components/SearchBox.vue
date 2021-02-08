@@ -111,7 +111,6 @@ export default {
 
 form {
   @include flex(column);
-  // width:fit-content;
 
   .input-field {
     position: relative;
@@ -124,7 +123,7 @@ form {
     }
 
     input {
-      width: min(350px, 90vw);
+      width: min(480px, 90vw);
       height: 50px;
       color: #c4c4c4;
       padding-left: 64px;
@@ -185,6 +184,10 @@ body.dark-mode form {
     @include flex(row, center, space-between);
     max-width: 1440px;
     margin:32px max(60px, 3vw) 0; 
+    
+    // input {
+    //   width: 480px;
+    // }
   }
 }
 </style>
