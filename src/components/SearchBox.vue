@@ -121,31 +121,29 @@ form {
       transform: translateY(-50%);
       left:46px;
     }
+  }
 
-    input {
-      width: min(480px, 90vw);
-      height: 50px;
-      color: #c4c4c4;
-      padding-left: 64px;
-      @include unsetField;
-
-      &:focus {
-        color: $text-col;
-        @include d-shadow($shadow-light, 0, 0, .3rem)
-      }
+  select, input {
+    @include unsetField;
+    @include d-shadow($shadow-light, 0, 0, .3rem);
+    
+    &:focus {
+      color: $text-col;
+      @include d-shadow($shadow-light, 0, 0, 1rem)
     }
+  }
+  
+  input {
+    width: min(480px, 90vw);
+    height: 50px;
+    // color: #c4c4c4;
+    padding-left: 64px;
   }
 
   select{
     padding-left: 24px;
     height:48px;
     width:200px;
-    @include unsetField;
-    
-    &:focus {
-      color: $text-col;
-      @include d-shadow($shadow-light, 0, 0, .3rem)
-    }
   }
 
   .select-region {
@@ -168,6 +166,8 @@ body.dark-mode form {
   select, option, input {
     background: $el-bg-dark-mode;
     color: #c4c4c4;
+    @include d-shadow($shadow-dark, 0, 0, .3rem);
+
     &:focus {
       color: white;
       @include d-shadow($shadow-dark, 0, 0, .3rem)

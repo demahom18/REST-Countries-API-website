@@ -56,6 +56,8 @@ props: {
     background: white;
     min-height: 330px;
     transition: all .3s;
+    @include d-shadow($shadow-light, 0, 0, .3rem);
+    
     &:hover {
       @include d-shadow();
     }
@@ -77,15 +79,16 @@ props: {
     @include flex('', center, '');
     &, h3 { font-size: 14px;}
     padding: 4px 0;
-    &:first-of-type {padding-bottom: 12px;}
+    &:first-of-type { padding-bottom: 12px; }
   }
-  
  }
  
- body.dark-mode .country-card {
-   background: $el-bg-dark-mode;
-   &:hover {
-      @include d-shadow($shadow-dark)
+  body.dark-mode .country-card {
+    @include d-shadow($shadow-dark, 0, 0, .3rem);
+    background: $el-bg-dark-mode;
+    
+    &:hover {
+      @include d-shadow($shadow-light, 0, 0, .3rem)
     }
  }
 

@@ -44,7 +44,8 @@ export default {
 nav {
   width:100%;
   background: white;
-  @include flex('', '', center)
+  @include flex('', '', center);
+  @include d-shadow($shadow-light, 0, 0, .3rem);
 }
 .navbar{
   @include flex('', '', space-between); 
@@ -72,6 +73,7 @@ nav {
   }
 }
 body.dark-mode nav {
+  @include d-shadow($shadow-dark, 0, 0, .3rem);
   background: $el-bg-dark-mode;
 }
 @media only screen and (max-width:400px) {

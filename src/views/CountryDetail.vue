@@ -146,6 +146,8 @@ export default {
   cursor:pointer;
   border-radius: 2px;
   padding: 7px 24px;
+  @include d-shadow($shadow-light, 0, 0, .1rem);
+  transition: all .3s ease-in-out;
 
   &.back {
     width: 136px;
@@ -162,7 +164,7 @@ export default {
   }
 
   &:hover {
-    @include d-shadow($shadow-light, 0, 0, 7px);
+    @include d-shadow($shadow-light, 0, 0, .3rem);
   }
 
  
@@ -209,9 +211,10 @@ export default {
 
 body.dark-mode  .btn{
   background: $el-bg-dark-mode;
+  @include d-shadow($shadow-dark, 0, 0, .1rem);
   
   &:hover {
-    @include d-shadow($shadow-dark, 0, 0, 7px);
+    @include d-shadow($shadow-light, 0, 0, .3rem);
   }
 
   path {
