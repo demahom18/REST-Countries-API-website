@@ -57,7 +57,7 @@
             <div>
               <span 
                 v-for="border in borders" 
-                :key="border"
+                :key="border + Math.random()"
                 class="border-pill btn"
                 @click="gotoPage(border)"
               > {{ border }}
