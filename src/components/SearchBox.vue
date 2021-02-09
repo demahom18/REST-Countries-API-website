@@ -36,67 +36,55 @@ import { inject, ref, computed } from 'vue'
 export default {
   name: 'SearchBox',
   emits: ['search'],
-  setup() {
+  setup(props, { emit }) {
     const search = ref('')
     const region = ref('')
-    const countriesByRegion = ref()
     
     const countries = inject('countries')
+    const countriesByRegion = ref()
     const countriesToShow = ref()
-    
-    const countriesFiltered = computed({
-      get: () => countriesToShow,
 
-      set: newVal => countriesToShow.value = newVal
-    })
+    /**
+     * Filter an iterator by the name of its items.
+     * 
+     * @param {*} arr iterator to filter
+     * @param {*} input the input to filter by
+     * @returns { Array } the array filtered
+     */
+    const filterByName  = (arr, input) => {
+      return arr.filter(item => item.name.toLowerCase().includes(input))
+    }
+    
+    const filterByRegion = (arr, reg) => {
+      return arr.filter(item => item.region.includes(reg))
+    }
+
+    const searchByRegion = () => {
+      if (region.value.length) {
+        countriesByRegion.value = countriesToShow.value 
+          = filterByRegion(countries.value, region.value) 
+        emit('search', countriesToShow.value)
+      }
+      else emit('search', countries.value)
+    }
+
+    const searchByName = () => {      
+      if (region.value.length) {
+        countriesToShow.value = filterByName(countriesByRegion.value, search.value)
+        emit('search', countriesToShow.value)
+      }
+      else { 
+        countriesToShow.value = filterByName(countries.value, search.value)
+        emit('search', countriesToShow.value)
+      }
+    }
+
 
     return {
       search,
       region,
-      countries,
-      countriesToShow,
-      countriesByRegion,
-      countriesFiltered
-    }
-  },
-  //TODO put these methods in setup fucntion
-  methods: {
-    searchByRegion() { 
-      if (this.region.length > 0) {
-        this.countriesByRegion = 
-          this.filterByRegion(this.countries, this.region)
-        this.countriesFiltered = this.countriesByRegion
-        this.$emit('search', this.countriesToShow)
-      }
-      else {
-        this.$emit('search', this.countries)
-      }
-    },
-    searchByName() {      
-      if (this.region.length > 0) {
-        this.countriesFiltered = 
-          this.filterByName(this.countriesByRegion, this.search)
-        this.$emit('search', this.countriesToShow)
-      }
-      else { 
-        this.countriesFiltered = 
-          this.filterByName(this.countries, this.search)
-        this.$emit('search', this.countriesToShow)
-      }
-    },
-    /**
-     * Filter an iterator by the name of its items.
-     * 
-     * @param {*} iter iterator to filter
-     * @param {*} input the input to filter by
-     * @returns { Array } the array filtered
-     */
-    filterByName (iter, input) {
-      return Array.from(iter).filter(it => it.name.toLowerCase().includes(input))
-    },
-    //Same as filterByName 
-    filterByRegion (iter, reg) {
-      return Array.from(iter).filter(it => it.region.includes(reg))
+      searchByName,
+      searchByRegion
     }
   }
 }
