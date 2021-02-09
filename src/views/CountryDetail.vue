@@ -22,7 +22,7 @@
         <div class="infos1">
           <p>
             <b>Native name: </b>{{ country.nativeName }}<br> 
-            <b>Population: </b>{{ country.population }}<br>   
+            <b>Population: </b>{{ population }}<br>   
             <b>Region: </b>{{ country.region }}<br> 
             <b>Sub Region: </b>{{ country.subregion }}<br>  
             <b>Capital: </b>{{ country.capital }}<br>
@@ -90,6 +90,13 @@ export default {
         .find(country => country.name === props.countryname)
     })
 
+    const populationFormatted = computed(()=> {
+      //There's probably a more efficient way to do it
+      return [...country.value.population.toString()]
+        .reverse().map((num, idx) => (idx % 3 === 0 && idx != 0) ? `${num},` : num)
+        .reverse().join('')
+  }) 
+
     const borders = computed(() => {
       let namesRaw = ref([]) 
       let bordersRaw = Array.from(country.value.borders)
@@ -124,7 +131,12 @@ export default {
       })
     }
          
-    return { country, gotoPage, borders }
+    return { 
+      country, 
+      borders, 
+      gotoPage,
+      population: populationFormatted 
+    }
   }
 }
 </script>

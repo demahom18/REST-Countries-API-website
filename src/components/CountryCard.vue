@@ -17,7 +17,7 @@
 
         <div>
           <h3>Population: </h3>
-          <p>{{ country.population }}</p>
+          <p>{{ population }}</p>
         </div>
 
         <div>
@@ -34,13 +34,26 @@
   </div>
 </template>
 
-<script>
+<script>import { computed } from "vue"
+
+
 export default {
 props: {
   country: {
     type: Object,
     required: true
   }
+},
+setup(props) {
+  const country = props.country
+
+  const populationFormatted = computed(()=> {
+    return [...country.population.toString()]
+      .reverse().map((num, idx) => (idx % 3 === 0 && idx != 0) ? `${num},` : num)
+      .reverse().join('')
+  })  
+
+  return { population: populationFormatted }
 }
 }
 </script>
