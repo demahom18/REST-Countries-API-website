@@ -15,7 +15,6 @@
   <div v-else class="no-result">
     <h2>No result found</h2>
   </div>
-  
 </template>
 
 <script >

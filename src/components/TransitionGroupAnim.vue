@@ -5,7 +5,6 @@
 </template>
 
 <style>
-
 .list-enter-active{
   transition: all .3s ease-in;
 }
@@ -17,5 +16,4 @@
   opacity: 0;
   transform: scale(.5);
 }
-
 </style>

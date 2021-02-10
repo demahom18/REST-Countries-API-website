@@ -34,8 +34,8 @@
   </div>
 </template>
 
-<script>import { computed } from "vue"
-
+<script>
+import { computed } from "vue"
 
 export default {
 props: {

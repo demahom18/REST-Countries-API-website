@@ -178,8 +178,6 @@ export default {
   &:hover {
     @include d-shadow($shadow-light, 0, 0, .3rem);
   }
-
- 
 }
 
 .detail{
@@ -262,7 +260,6 @@ body.dark-mode  .btn{
 }
 
 @media only screen and (min-width:1030px) {
-
   .infos {
     padding: 0 0 0 min(120px, 9vw);
     margin-right: 80px;
@@ -289,5 +286,4 @@ body.dark-mode  .btn{
     }
   }
 }
-
 </style>

@@ -31,7 +31,7 @@
 </template>
 <script>
 
-import { inject, ref, computed } from 'vue'
+import { inject, ref } from 'vue'
 
 export default {
   name: 'SearchBox',
@@ -44,13 +44,6 @@ export default {
     const countriesByRegion = ref()
     const countriesToShow = ref()
 
-    /**
-     * Filter an iterator by the name of its items.
-     * 
-     * @param {*} arr iterator to filter
-     * @param {*} input the input to filter by
-     * @returns { Array } the array filtered
-     */
     const filterByName  = (arr, input) => {
       return arr.filter(item => item.name.toLowerCase().includes(input))
     }
@@ -78,7 +71,6 @@ export default {
         emit('search', countriesToShow.value)
       }
     }
-
 
     return {
       search,
@@ -124,7 +116,6 @@ form {
   input {
     width: min(480px, 90vw);
     height: 50px;
-    // color: #c4c4c4;
     padding-left: 64px;
   }
 
@@ -163,8 +154,7 @@ body.dark-mode form {
   }
   span {
     background: $text-dark-mode;
-  }
-  
+  } 
 }
 
 @media only screen and (min-width: 900px) {

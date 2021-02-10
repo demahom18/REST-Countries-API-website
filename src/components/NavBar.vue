@@ -39,7 +39,7 @@ export default {
 </script>
 
 <style lang="scss">
- @import '../assets/style.scss'; 
+@import '../assets/style.scss'; 
  
 nav {
   width:100%;
@@ -81,6 +81,5 @@ body.dark-mode nav {
     width: 15px;
     height:14px;
   }
-
 }
 </style>

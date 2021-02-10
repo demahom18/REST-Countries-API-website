@@ -24,7 +24,7 @@ export default {
     provide('countries', countries)
 
     // Check if the darkmode is enabled
-    if (window.matchMedia('prefers-color-scheme: light').matches) {
+    if (window.matchMedia('prefers-color-scheme: dark').matches) {
       // It's a dark theme...
       return  window.document.body.classList.add('dark-mode')
     }
@@ -33,10 +33,8 @@ export default {
       window.document.body
         .classList.toggle('dark-mode')
     }
-   
 
-
-  return { setTheme }
+    return { setTheme }
   }
 }
 </script>
