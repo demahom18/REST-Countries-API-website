@@ -20,7 +20,7 @@ export default {
         .catch(err  => console.error(err))
     }
     
-    getCountries('https://restcountries.eu/rest/v2/all')
+    getCountries('https://restcountries.eu/rest/v3.1/all')
     provide('countries', countries)
 
     // Check if the darkmode is enabled
