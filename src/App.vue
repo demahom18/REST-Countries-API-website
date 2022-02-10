@@ -13,15 +13,27 @@ export default {
   },
   setup() {
     const countries = ref({})
-    const getCountries =  url => {
+    const error = ref()
+    const getCountries = url => {
       fetch(url)
-        .then(res   => res.json())
+        .then(res   => {
+            if (res.ok == false) {
+                error.value = 'Error'
+                countries.value = []
+                return
+            }
+
+            return res.json()
+        })
         .then(data  => countries.value = data)
-        .catch(err  => console.error(err))
+        .catch(err  => {
+            error.value = err
+        })
     }
     
     getCountries('https://restcountries.com/v3.1/all')
     provide('countries', countries)
+    provide('apiError', error)
 
     // Check if the darkmode is enabled
     if (window.matchMedia('prefers-color-scheme: dark').matches) {

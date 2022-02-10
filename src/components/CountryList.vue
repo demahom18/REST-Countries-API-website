@@ -1,8 +1,8 @@
 <template>
     <section 
-    class="country-list" 
-    v-if="countries.length > 0"
-  >
+        class="country-list" 
+        v-if="countries && countries.length > 0"
+    >
     <TransitionGroupAnim>
       <CountryCard  
       v-for="country in countries"
@@ -12,8 +12,11 @@
     />
     </TransitionGroupAnim>
   </section>
-  <div v-else class="no-result">
-    <h2>No result found</h2>
+  <div v-if="error" class="error no-result">
+    <h2>An error has occured. Please refresh</h2>
+  </div>
+  <div v-else class="no-result loading">
+    <h2>Loading...</h2>
   </div>
 </template>
 
@@ -28,6 +31,7 @@ export default {
   components: { CountryCard, TransitionGroupAnim },
   setup() {
     const countries = inject('countries')
+    const error = inject('apiError')
     const countriesFiltered = inject('countriesFiltered')
 
     const countriesToDisplay = computed(() => {
@@ -37,7 +41,7 @@ export default {
       else return countries.value
     })
 
-    return { countries: countriesToDisplay }
+    return { countries: countriesToDisplay, error }
   }
 }
 </script>
