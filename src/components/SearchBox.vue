@@ -45,7 +45,7 @@ export default {
     const countriesToShow = ref()
 
     const filterByName  = (arr, input) => {
-      return arr.filter(item => item.name.toLowerCase().includes(input))
+      return arr.filter(item => item.name.common.toLowerCase().includes(input))
     }
     
     const filterByRegion = (arr, reg) => {
