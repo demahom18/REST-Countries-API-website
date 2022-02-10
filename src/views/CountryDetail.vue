@@ -13,15 +13,15 @@
     <div class="detail">
       <div class="flag">
         <img 
-          :src="country.flag" 
-          :alt="`${country.name} flag`"
+          :src="country.flags.png" 
+          :alt="`${country.name.common} flag`"
         />
       </div>
       <div class="infos">
-        <h2>{{ country.name }}</h2>
+        <h2>{{ country.name.common }}</h2>
         <div class="infos1">
           <p>
-            <b>Native name: </b>{{ country.nativeName }}<br> 
+            <b>Native name: </b>{{ countryNativeName }}<br> 
             <b>Population: </b>{{ population }}<br>   
             <b>Region: </b>{{ country.region }}<br> 
             <b>Sub Region: </b>{{ country.subregion }}<br>  
@@ -30,9 +30,9 @@
           <p>
             <b>Top Level Domain: </b>
             <span
-              v-for="domain in country.topLevelDomain"
+              v-for="(domain, i) in country.tld"
               :key="domain"
-            >{{ domain }}
+            >{{ domain }} {{ i > 0 && i != country.tld.length ? ',' : '' }}
             </span> <br>
 
             <b>Currencies: </b>
@@ -44,10 +44,10 @@
 
             <b>Languages: </b>
             <span 
-              v-for="language in country.languages"
-              :key="language.name"
+              v-for="(lang, i) in countryLanguages"
+              :key="`lang` + i"
               class="language"
-            >{{ language.name + ', '}}
+            >{{ lang + ', '}}
             </span><br> 
           </p>
         </div>
@@ -57,7 +57,7 @@
             <div>
               <span 
                 v-for="border in borders" 
-                :key="border + Math.random()"
+                :key="border + Math.random()*100"
                 class="border-pill btn"
                 @click="gotoPage(border)"
               > {{ border }}
@@ -81,63 +81,157 @@ export default {
     }
   },
   setup(props) {
-    const router = useRouter()
+    // const router = useRouter()
     const countries = inject('countries')
-    const countryBorders = ref([])
+
+    // //
+    // const country = computed(() => {
+    //   return countries.value
+    //     .find(country => country.name.common === props.countryname)
+    // })
+
+    // //
+    // const countryLanguages = computed(() => {
+    //     let langs = []
+    //     for (let lang in country.value.languages) {
+    //         langs.push(country.value.languages[lang])
+    //         console.log(lang);
+    //     }
+
+    //     return langs
+    // })
+
+    // //
+    // const countryNativeName = computed(() => {
+    //     let names = []
+    //     for (let name in country.value.name.nativeName) {
+    //         return country.value.name.nativeName[name]
+    //     }
+
+    //     return names
+    // })
+
+    // //
+    // const populationFormatted = computed(()=> {
+    //     //There's probably a more efficient way to do it
+    //     return [...country.value.population.toString()]
+    //         .reverse().map((num, idx) => (idx % 3 === 0 && idx != 0) ? `${num},` : num)
+    //         .reverse().join('')
+    // }) 
+
+    // //
+    // const borders = computed(() => {
+    //   let namesRaw = ref([]) 
+    //   let bordersRaw = country.value.borders ? Array.from(country.value.borders) : []
+
+    // if (bordersRaw.length = 0) {
+    //     countryBorders = null
+    //     return
+    // }
+        
+    //   // No direct access to the borders' name so we
+    //   // Get the names of the borders with the fifa (I don't know what this is) 
+    //   for (let i=0, l = bordersRaw.length; i < l; i++) {
+    //     namesRaw.value.push(countries.value
+    //       .filter(country => country.fifa == bordersRaw[i]))
+    //   }
+
+    //   // Get the names from the raw values
+    //   countryBorders.value = namesRaw.value.map( nRaw =>  nRaw[0].name.common)
+        
+    //   // Then format the names to get rid of the parenthesis
+    //   let namesFormatted = ref([])
+    //   countryBorders.value.forEach(bord => {
+    //       namesFormatted.value.push(bord.toString().split(' ('))
+    //     })
+        
+    //   // Take the element at index 0 to shorten the name
+    //   return namesFormatted.value.map(name => name[0])
+    // })
     
-    const country = computed(() => {
-      return countries.value
-        .find(country => country.name === props.countryname)
-    })
+    // const gotoPage = border => {
+    //   let countryToGo = this.borders
+    //     .find(c => c.includes(border))
 
-    const populationFormatted = computed(()=> {
-      //There's probably a more efficient way to do it
-      return [...country.value.population.toString()]
-        .reverse().map((num, idx) => (idx % 3 === 0 && idx != 0) ? `${num},` : num)
-        .reverse().join('')
-  }) 
-
-    const borders = computed(() => {
-      let namesRaw = ref([]) 
-      let bordersRaw = Array.from(country.value.borders)
+    //   router.push({
+    //     name: 'CountryDetail', 
+    //     params: { countryname: countryToGo},
         
-      // No direct access to the borders' name so we
-      // Get the names of the borders with the alpha3Code 
-      for (let i=0, l = bordersRaw.length; i < l; i++) {
-        namesRaw.value.push(countries.value
-          .filter(country => country.alpha3Code == bordersRaw[i]))
-      }
-
-      // Get the names from the raw values
-      countryBorders.value = namesRaw.value.map( nRaw =>  nRaw[0].name)
-        
-      // Then format the names to get rid of the parenthesis
-      let namesFormatted = ref([])
-      countryBorders.value.forEach(bord => {
-          namesFormatted.value.push(bord.toString().split(' ('))
-        })
-        
-      // Take the element at index 0 to shorten the name
-      return namesFormatted.value.map(name => name[0])
-    })
-    
-    const gotoPage = border => {
-      let countryToGo = countryBorders.value
-        .find(c => c.includes(border))
-
-      router.push({
-        name: 'CountryDetail', 
-        params: { countryname: countryToGo}
-      })
-    }
+    //   })
+    // }
          
     return { 
-      country, 
-      borders, 
-      gotoPage,
-      population: populationFormatted 
+      countries, 
+    //   gotoPage,
     }
-  }
+  },
+  methods: {
+      gotoPage(border) {
+        let countryToGo = this.borders
+            .find(c => c.includes(border))
+
+        this.$router.push({
+            name: 'CountryDetail', 
+            params: { countryname: countryToGo},
+            
+        })
+      },
+      getBorderName(code) {
+          let border = this.countries.filter(country => {
+              return country.fifa == code || country.cca3 == code || country.cioc == code
+          })[0]
+        console.log(border);
+
+          return border.name.common
+      }
+  },
+  computed: {
+      country() {
+        if (this.countries && this.countries.length)
+            return this.countries
+                .find(country => country.name.common === this.countryname)  
+      },
+      countryLanguages() {
+        let langs = []
+        for (let lang in this.country.languages) {
+            langs.push(this.country.languages[lang])
+        }
+
+        return langs
+      },
+      countryNativeName() {
+        let names = []
+        for (let name in this.country.name.nativeName) {
+            // console.log('Hello');
+            return this.country.name.nativeName[name].official
+        }
+
+        return names
+      },
+      population() {
+          return [...this.country.population.toString()]
+            .reverse().map((num, idx) => (idx % 3 === 0 && idx != 0) ? `${num},` : num)
+            .reverse().join('')
+      },
+      borders() {
+        let bordersRaw = this.country.borders ? Array.from(this.country.borders) : []
+        let _borders = []
+
+        if (bordersRaw.length == 0) {
+            return _borders
+        }
+
+        for (let countryCode of bordersRaw) {
+                 
+            let border = this.getBorderName(countryCode)
+            _borders.push(border)
+        }
+
+        return _borders
+      }
+
+  },
+  
 }
 </script>
 <style lang="scss" >
